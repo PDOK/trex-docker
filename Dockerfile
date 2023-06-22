@@ -7,6 +7,7 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Europe/Amsterdam
 
+# Note: upgrade gdal once we migrate our lighttpd baseimage to a more recent debian image
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends \
         libssl1.1 \
@@ -25,8 +26,7 @@ RUN export $(cat /etc/os-release | grep VERSION_CODENAME) && \
     dpkg -i t-rex_${trex_version}-1.${VERSION_CODENAME}_amd64.deb && \
     rm t-rex_*_amd64.deb
 
-# LightHTTPD
-ADD config/include.conf /srv/lighttpd/include.conf
+# Lighttpd
 ADD generate-lighttpd-config.sh /srv/lighttpd/generate-lighttpd-config.sh
 RUN chown www /srv/lighttpd/lighttpd.conf && \
     chown www /srv/lighttpd/generate-lighttpd-config.sh &&  \
