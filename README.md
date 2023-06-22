@@ -4,13 +4,13 @@ Docker image containing [t-rex tileserver](https://t-rex.tileserver.ch/) in a mu
 Since it's a multiprocess setup we use [supervisor](http://supervisord.org/) for process management. The multiprocess setup
 is required for performance reasons due to [this issue in t-rex](https://github.com/t-rex-tileserver/t-rex/issues/286#issuecomment-1598818987).
 
-# Build
+## Build
 
 ```
 docker build -t pdok/lighttpd-trex .
 ```
 
-# Run 
+## Run 
 
 Run the example as:
 
