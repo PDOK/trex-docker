@@ -20,7 +20,7 @@ Run the example as:
 
 ```
 cd examples/
-docker run --rm -p 80:80 -v $PWD:/var/data/in:ro -e TREX_INSTANCES=5 -e GPKG_PATH=/var/data/in/bgt.gpkg -it pdok/trex-server
+docker run --rm -p 80:80 -v $PWD:/var/data/in:ro -e TREX_INSTANCES=5 -it pdok/trex-server:<version>
 ```
 
 At startup time you can specify the number of t-rex instances you want to run. Supervisor will make sure the processes keep running,
