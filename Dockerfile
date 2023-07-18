@@ -26,23 +26,25 @@ RUN export $(cat /etc/os-release | grep VERSION_CODENAME) && \
     dpkg -i t-rex_${trex_version}-1.${VERSION_CODENAME}_amd64.deb && \
     rm t-rex_*_amd64.deb
 
-# Lighttpd
-ADD generate-lighttpd-config.sh /srv/lighttpd/generate-lighttpd-config.sh
-RUN chown www /srv/lighttpd/lighttpd.conf && \
-    chown www /srv/lighttpd/generate-lighttpd-config.sh &&  \
-    chmod +x /srv/lighttpd/generate-lighttpd-config.sh
+# Add scripts
+ADD ./generate-lighttpd-config.sh /etc/scripts/generate-lighttpd-config.sh
+ADD ./generate-supervisord-config.sh /etc/scripts/generate-supervisord-config.sh
+ADD ./entrypoint.sh /etc/scripts/entrypoint.sh
 
-# Supervisor
-COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Set permissions
+RUN chown www /srv/lighttpd/lighttpd.conf && \
+    chown -R www /etc/supervisor/conf.d && \
+    chown -R www /etc/scripts && \
+    chmod +x /etc/scripts/generate-lighttpd-config.sh && \
+    chmod +x /etc/scripts/generate-supervisord-config.sh && \
+    chmod +x /etc/scripts/entrypoint.sh
 
 USER www
 
 VOLUME ["/var/data/in"]
-VOLUME ["/var/data/out"]
 
 EXPOSE 80
 
-ENV TREX_INSTANCES=1
 ENV THREAD_COUNT=1
 
-ENTRYPOINT ["/usr/bin/supervisord","-c","/etc/supervisor/conf.d/supervisord.conf"]
+ENTRYPOINT ["/etc/scripts/entrypoint.sh"]

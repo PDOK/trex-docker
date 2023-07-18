@@ -11,7 +11,7 @@ resolutions = [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 2
 origin = "TopLeft"
 
 [[tileset]]
-name = "test"
+name = "bgt"
 minzoom=0
 maxzoom=16
 srid = 28992
